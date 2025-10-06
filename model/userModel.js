@@ -1,14 +1,20 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+
+//user table
 const userSchema =  new Schema({
-    email: {
-        type: String,
+    email: {                       //email column
+        type: String,   
         required: [true, "Email must be provided"]
     },
-    password: {
+    password: {                    //pw column
         type: String,
         required: [true, "Password must be provided"]
+    },
+    userName: {
+        type: String,
+        required: [true, "Username must be provided"]
     },
     phoneNumber: {
         type: Number,
@@ -17,8 +23,10 @@ const userSchema =  new Schema({
     role: {
         type: String,
         enum: ["customer", "admin"],
-        defaultc: customer
+        default: "customer"
     },
+}, {
+    timestamps: true
 })
 
 module.exports = mongoose.model("User", userSchema) 
