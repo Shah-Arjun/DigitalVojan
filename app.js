@@ -2,6 +2,8 @@ const express = require('express')
 const connectMongoDB = require('./database/database')
 const User = require('./model/userModel')
 
+const bcrypt = require('bcrypt')
+
 require('dotenv').config()
 const app = express()
 
@@ -37,7 +39,7 @@ app.post("/register", async(req, res) => {
         userName: username,                //db column name: frontend req
         email: email,                 // db column name: frontend req
         phoneNumber: phoneNumber,
-        password: password
+        password: bcrypt.hashSync(password, 10)
     })
 
     res.status(201).json({
