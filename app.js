@@ -57,6 +57,39 @@ app.post("/register", async(req, res) => {
 })
 
 
+
+// Login user api
+app.post("/login", async(req, res) => {
+    const {email, password} =req.body
+    if(!email || !password){
+        return res.status(400).json({
+            message: "Please enter email and passwords"
+        })
+    }
+
+    //check if the user exist or not?
+    const userFound = await User.find({ email : email })
+    if(userFound == 0) {
+        return res.status(404).json({
+            message: "User not registered"
+        })
+    }
+
+    //match/check the password
+    const ismatched = bcrypt.compareSync(password, userFound[0].password)   // (req pw , DB pw)
+    if(ismatched) {
+        res.status(200).json({
+            message: "User logged in successfully"
+        })
+    } else {
+        res.status(404).json({
+            message: "Invalid Password"
+        })
+    }
+})
+
+
+
 //Server Listen
 const PORT = process.env.PORT
 app.listen(PORT, () => {
