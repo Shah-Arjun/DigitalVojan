@@ -34,6 +34,15 @@ app.post("/register", async(req, res) => {
             message: "Username, email, password, phoneNumber must bed provided"
         })
     }
+
+    //checks if the email already exist ?
+    const userFound = await User.find({ email : email })    // email column === req email
+    if(userFound.length > 0) {
+        return res.status(400).json({
+            message: "User with this email already exists."
+        })
+    }
+
     //esle create new user row in User table with user details
     await User.create({
         userName: username,                //db column name: frontend req
