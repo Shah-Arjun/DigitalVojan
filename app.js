@@ -2,7 +2,10 @@ const express = require('express')
 const connectMongoDB = require('./database/database')
 const User = require('./model/userModel')
 
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt')  //for hashing
+const jwt = require("jsonwebtoken")   //for token generation
+
+
 
 require('dotenv').config()
 const app = express()
@@ -36,7 +39,7 @@ app.post("/register", async(req, res) => {
     }
 
     //checks if the user with this email already exist ?
-    const userFound = await User.find({ email : email })    // email column === req email
+    const userFound = await User.find({ userEmail : email })    // email column === req email
     if(userFound.length > 0) {
         return res.status(400).json({
             message: "User with this email already exists."
@@ -46,9 +49,9 @@ app.post("/register", async(req, res) => {
     //else create new user row in User table with user details
     await User.create({
         userName: username,                //db column name: frontend req
-        email: email,                 // db column name: frontend req
+        userEmail: email,                 // db column name: frontend req
         phoneNumber: phoneNumber,
-        password: bcrypt.hashSync(password, 10)
+        userPassword: bcrypt.hashSync(password, 10)
     })
 
     res.status(201).json({
@@ -68,7 +71,7 @@ app.post("/login", async(req, res) => {
     }
 
     //check if the user exist or not?
-    const userFound = await User.find({ email : email })
+    const userFound = await User.find({ userEmail : email })
     if(userFound == 0) {
         return res.status(404).json({
             message: "User not registered"
@@ -76,10 +79,15 @@ app.post("/login", async(req, res) => {
     }
 
     //match/check the password
-    const ismatched = bcrypt.compareSync(password, userFound[0].password)   // (req pw , DB pw)
+    const ismatched = bcrypt.compareSync(password, userFound[0].userPassword)   // (req pw , DB pw)
     if(ismatched) {
+        // generate token - unique identifier
+        const token = jwt.sign({id: userFound[0]._id}, process.env.SECRET_KEY, {
+            expiresIn: '30d'
+        })
         res.status(200).json({
-            message: "User logged in successfully"
+            message: "User logged in successfully",
+            token
         })
     } else {
         res.status(404).json({

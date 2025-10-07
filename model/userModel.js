@@ -4,11 +4,11 @@ const Schema = mongoose.Schema
 
 //user table
 const userSchema =  new Schema({
-    email: {                       //email column
+    userEmail: {                       //email column
         type: String,   
         required: [true, "Email must be provided"]
     },
-    password: {                    //pw column
+    userPassword: {                    //pw column
         type: String,
         required: [true, "Password must be provided"]
     },
