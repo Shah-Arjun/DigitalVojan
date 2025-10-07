@@ -35,7 +35,7 @@ app.post("/register", async(req, res) => {
         })
     }
 
-    //checks if the email already exist ?
+    //checks if the user with this email already exist ?
     const userFound = await User.find({ email : email })    // email column === req email
     if(userFound.length > 0) {
         return res.status(400).json({
@@ -43,7 +43,7 @@ app.post("/register", async(req, res) => {
         })
     }
 
-    //esle create new user row in User table with user details
+    //else create new user row in User table with user details
     await User.create({
         userName: username,                //db column name: frontend req
         email: email,                 // db column name: frontend req
