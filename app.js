@@ -72,7 +72,7 @@ app.post("/login", async(req, res) => {
 
     //check if the user exist or not?
     const userFound = await User.find({ userEmail : email })
-    if(userFound == 0) {
+    if(userFound.length == 0) {
         return res.status(404).json({
             message: "User not registered"
         })
