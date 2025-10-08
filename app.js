@@ -2,7 +2,7 @@ const express = require('express')
 const connectMongoDB = require('./database/database')
 const { registerUser, loginUser } = require('./controller/auth/authController')
 
-
+const authRoute = require("./routes/authRoutes")
 
 require('dotenv').config()
 const app = express()
@@ -26,12 +26,10 @@ app.get("/", (req,res) => {
 })
 
 
-//register user api
-app.post("/register", registerUser)
 
 
-// Login user api
-app.post("/login", loginUser)
+
+app.use("", authRoute)
 
 
 
