@@ -70,3 +70,34 @@ exports.loginUser = async(req, res) => {
         })
     }
 }
+
+
+
+// forget password
+exports.forgetPassword = async(req, res) => {
+    const {email} = req.body     //forntend should send email
+
+    //if email not provided
+    if(!email) {
+        return res.status(400).json({
+            message: "Please enter an email"
+        })
+    }
+
+    //else provided then checks if it is registered
+    const userExist = await User.find({ userEmail: email})    //this returns an array
+    if(userExist.length == 0){
+        return res.status(404).json({
+            message: "Email is not registered."
+        })
+    }
+
+    //if user exist the send OTP to that email
+    const r_no = Math.random()  //gives decimal in range 0 to 1
+    const fourDigit = r_no * 10000  //converts into 4 digit 
+    const otp = Math.floor(fourDigit)    //converts into integer
+
+
+                  // OR in 1 line
+    // const otp = Math.floor(Math.random() * 10000)
+}
