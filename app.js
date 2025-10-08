@@ -29,7 +29,7 @@ app.get("/", (req,res) => {
 
 
 
-app.use("", authRoute)
+app.use("", authRoute)    // middleware for routes --->  /register, /login
 
 
 
