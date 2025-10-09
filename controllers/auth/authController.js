@@ -116,7 +116,40 @@ exports.forgetPassword = async(req, res) => {
         message: `${otp}`
     })
 
-    res.json({
-        message: "Sent OTP successfully"
+    res.status(200).json({
+        message: "OTP sent successfully"
     })
+}
+
+
+
+
+// Verify OTP api logic goes here
+exports.verifyOtp = async (req, res) => {
+    const {email, otp} = req.body
+
+    // checks if email and otp provided or not
+    if(!email || !otp){
+        return res.status(400).json({
+            message: "Please enter email, otp"
+        })
+    }
+
+
+    //check s if otp is correct or not
+    const userExist = await User.find({userEmail : email})
+    if(userExist.length == 0){
+        returnres.status(404).json({
+            message: "This email is not registered"
+        })
+    }
+    if(userExist[0].otp !== otp) {
+        res.status(400).json({
+            message: "Invalid OTP. Try again"
+        })
+    } else {
+        res.status(200).json({
+            message: "OTP verified"
+        })
+    }
 }
