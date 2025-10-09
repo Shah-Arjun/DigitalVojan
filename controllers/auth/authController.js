@@ -1,6 +1,7 @@
 const User = require('../../model/userModel')
 const bcrypt = require('bcrypt')  //for hashing
 const jwt = require("jsonwebtoken")   //for token generation
+const sendEmail = require('../../services/sendEmail')
 
 
 // Register user api logic
@@ -97,7 +98,16 @@ exports.forgetPassword = async(req, res) => {
     const fourDigit = r_no * 10000  //converts into 4 digit 
     const otp = Math.floor(fourDigit)    //converts into integer
 
-
                   // OR in 1 line
     // const otp = Math.floor(Math.random() * 10000)
+
+    await sendEmail({
+        email: email,
+        subject: "OTP for Online Vojan password reset",
+        message: `${otp}`
+    })
+
+    res.json({
+        message: "Email sent successfully"
+    })
 }
