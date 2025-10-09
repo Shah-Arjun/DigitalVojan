@@ -86,12 +86,14 @@ exports.forgetPassword = async(req, res) => {
     }
 
     //else provided then checks if it is registered
-    const userExist = await User.find({ userEmail: email})    //this returns an array
+    const userExist = await User.find({ userEmail: email})    //this returns an array of object
     if(userExist.length == 0){
         return res.status(404).json({
             message: "Email is not registered."
         })
     }
+
+    //console.log(userExist)
 
     //if user exist the send OTP to that email
     const r_no = Math.random()  //gives decimal in range 0 to 1
@@ -101,6 +103,13 @@ exports.forgetPassword = async(req, res) => {
                   // OR in 1 line
     // const otp = Math.floor(Math.random() * 10000)
 
+
+     // save OTP to db
+    userExist[0].otp = otp
+    await userExist[0].save()
+
+
+
     await sendEmail({
         email: email,
         subject: "OTP for Online Vojan password reset",
@@ -108,6 +117,6 @@ exports.forgetPassword = async(req, res) => {
     })
 
     res.json({
-        message: "Email sent successfully"
+        message: "Sent OTP successfully"
     })
 }
