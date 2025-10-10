@@ -154,6 +154,7 @@ exports.verifyOtp = async (req, res) => {
 
         //dispose OTP after verifyed so cannot be used same otp next time
         userExist[0].otp = undefined
+        userExist[0].isOtpVerified = true
         await userExist[0].save()
     }
 
@@ -185,9 +186,17 @@ exports.resetPassword = async (req, res) => {
             message: "The email you entered is not registered"
         })
     }
+
+    //check otp verified or not
+    if(userExist[0].isOtpVerified !== true){
+        return res.status(403).json({
+            message: "You cannot perform this action"
+        })
+    }
     
     //replace the password with newPassword in db--> save hashed password
     userExist[0].userPassword = bcrypt.hashSync(newPassword, 10)
+    userExist[0].isOtpVerified = false
     await userExist[0].save()
 
     res.status(200).json({
