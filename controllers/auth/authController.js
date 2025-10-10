@@ -139,7 +139,7 @@ exports.verifyOtp = async (req, res) => {
     //check s if otp is correct or not
     const userExist = await User.find({userEmail : email})
     if(userExist.length == 0){
-        returnres.status(404).json({
+        return res.status(404).json({
             message: "This email is not registered"
         })
     }
@@ -152,4 +152,13 @@ exports.verifyOtp = async (req, res) => {
             message: "OTP verified"
         })
     }
+
+    //dispose OTP after use so cannot be used next time
+    userExist[0].otp = undefined
+    await userExist[0].save()
+    
+    res.status(200).json({
+        message: "OTP verified"
+    })
+
 }
