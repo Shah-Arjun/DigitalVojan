@@ -160,3 +160,38 @@ exports.verifyOtp = async (req, res) => {
 }
 
 
+
+
+//RESET new pasword api logic goes here
+exports.resetPassword = async (req, res) => {
+    const {email, newPassword, confirmPassword} = req.body
+
+    if(!email || !newPassword || ! confirmPassword){
+        return res.status(400).json({
+            message: "Provide email, newPassword and confirmPassword"
+        })
+    }
+
+    //checks if newPassword and confirmPassword same
+    if(newPassword !== confirmPassword) {
+        return res.status(400).json({
+            message: "newPassword and confirmPassword didn't match"
+        })
+    }
+
+    const userExist = await User.find({userEmail : email})
+    if(userExist.length == 0){
+        return res.status(400).json({
+            message: "The email you entered is not registered"
+        })
+    }
+    
+    //replace the password with newPassword in db--> save hashed password
+    userExist[0].userPassword = bcrypt.hashSync(newPassword, 10)
+    await userExist[0].save()
+
+    res.status(200).json({
+        message: "Password changed successfully"
+    })
+
+}
