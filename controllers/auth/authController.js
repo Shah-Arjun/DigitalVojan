@@ -108,8 +108,6 @@ exports.forgetPassword = async(req, res) => {
     userExist[0].otp = otp
     await userExist[0].save()
 
-
-
     await sendEmail({
         email: email,
         subject: "OTP for Online Vojan password reset",
@@ -136,13 +134,15 @@ exports.verifyOtp = async (req, res) => {
     }
 
 
-    //check s if otp is correct or not
+    //checks if otp is registered or not
     const userExist = await User.find({userEmail : email})
     if(userExist.length == 0){
         return res.status(404).json({
             message: "This email is not registered"
         })
     }
+
+    // checks if the otp matched or not
     if(userExist[0].otp !== otp) {
         res.status(400).json({
             message: "Invalid OTP. Try again"
@@ -151,14 +151,12 @@ exports.verifyOtp = async (req, res) => {
         res.status(200).json({
             message: "OTP verified"
         })
+
+        //dispose OTP after verifyed so cannot be used same otp next time
+        userExist[0].otp = undefined
+        await userExist[0].save()
     }
 
-    //dispose OTP after use so cannot be used next time
-    userExist[0].otp = undefined
-    await userExist[0].save()
-    
-    res.status(200).json({
-        message: "OTP verified"
-    })
-
 }
+
+
