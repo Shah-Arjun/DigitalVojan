@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken")   //for token generation
 const sendEmail = require('../../services/sendEmail')
 
 
-// Register user api logic
+// REGISTER user api logic
 exports.registerUser = async(req, res) => {
     const {email, password, phoneNumber, username} = req.body
     if(!email || !password || !phoneNumber || !username){
@@ -37,7 +37,7 @@ exports.registerUser = async(req, res) => {
 
 
 
-// Login user api logic
+// LOGIN     user api logic
 exports.loginUser = async(req, res) => {
     const {email, password} =req.body
     if(!email || !password){
@@ -74,7 +74,7 @@ exports.loginUser = async(req, res) => {
 
 
 
-// forget password
+// FORGET password
 exports.forgetPassword = async(req, res) => {
     const {email} = req.body     //forntend should send email
 
@@ -122,7 +122,7 @@ exports.forgetPassword = async(req, res) => {
 
 
 
-// Verify OTP api logic goes here
+// VERIFT OTP api logic goes here
 exports.verifyOtp = async (req, res) => {
     const {email, otp} = req.body
 
@@ -134,7 +134,7 @@ exports.verifyOtp = async (req, res) => {
     }
 
 
-    //checks if otp is registered or not
+    //CHECKS if otp is registered or not
     const userExist = await User.find({userEmail : email})
     if(userExist.length == 0){
         return res.status(404).json({
