@@ -8,7 +8,7 @@ const productSchema = new Schema({
         required: [true, "productName must be provided"],
     },
     productDescription: {
-        type: Text,
+        type: String,
         required: [true, "productDescription must be provided"],
     },
     productPrice: {
