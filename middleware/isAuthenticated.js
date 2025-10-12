@@ -44,9 +44,9 @@ const isAuthenticated = async(req, res, next) => {
             })
         }
 
-        req.user = doesUserExist  //passes the user details to next parameter ie. createProduct controller
+        req.user = doesUserExist  //passes the user details to next parameter ie. restrictTo controller
 
-        next()   // after authenticaton success, it runs next parameter ie. createProduct controller
+        next()   // after authenticaton success, it runs next parameter ie. restrictTo controller
 
     } catch (err) {
         res.status(400).json({
