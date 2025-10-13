@@ -44,7 +44,7 @@ const isAuthenticated = async(req, res, next) => {
             })
         }
 
-        req.user = doesUserExist  //passes the user details to next parameter ie. restrictTo controller
+        req.user = doesUserExist  //append user key in db, passes the user details to next parameter ie. restrictTo controller
 
         next()   // after authenticaton success, it runs next parameter ie. restrictTo controller
 

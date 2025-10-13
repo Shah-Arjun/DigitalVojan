@@ -1,5 +1,5 @@
 // function to restrict authorization
-const restrictTo = (...roles) => {               // ...   => rest operator , chnages the passed parameters into array 
+const restrictTo = (...roles) => {               // ...   => rest operator ,that catches the passed parameters and changes into array 
     //returning middleware
     return (req, res, next) => {
         const userRole = req.user.role   //req.user is logged in user details passed from isAuthenticated
