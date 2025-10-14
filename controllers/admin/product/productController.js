@@ -44,3 +44,22 @@ exports.createProduct = async (req, res) => {
     }
     
 }
+
+
+
+
+// GET ALL PRODUCTS API LOGIC
+exports.getProducts = async (req, res) => {
+    const products = await Product.find()
+    if(!products){
+        res.status(400).json({
+            message: "No products found",
+            products: []         //helpful in frontend
+        })
+    } else {
+        res.status(200).json({
+            message: "Product found",
+            products                 //sending products to frontend in response
+        })
+    }
+}
