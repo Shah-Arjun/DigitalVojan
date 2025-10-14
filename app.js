@@ -12,6 +12,10 @@ app.use(express.json())         //helps express to understand/parde JSON
 app.use(express.urlencoded({extended: true}))     //handles data from from but doesnot handle file, we need multer for file
 
 
+//telling nodejs to give access to "uploads" folder
+app.use(express.static('./uploads'))
+
+
 //mongoDB connection function invoke
 connectMongoDB()
 
