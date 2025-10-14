@@ -1,5 +1,7 @@
 const Product = require("../../../model/productModel")
 
+
+// CREATE PRODUCT API LOGIC
 exports.createProduct = async (req, res) => {
     try {
         //console.log(req.user)  //user details passed from isAuthenticated middleware

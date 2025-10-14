@@ -9,7 +9,7 @@ const upload = multer({storage : storage})
 
 
 // product routes endpoints goes here
-router.route('/createProduct').post(isAuthenticated, restrictTo("admin"),upload.single('productImage'), createProduct)  //product image should be same in frontend name field
+router.route('/products').post(isAuthenticated, restrictTo("admin"),upload.single('productImage'), createProduct)  //product image should be same in frontend name field
 
 
 module.exports = router
