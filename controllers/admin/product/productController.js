@@ -3,6 +3,7 @@ const Product = require("../../../model/productModel")
 exports.createProduct = async (req, res) => {
     //console.log(req.user)  //user details passed from isAuthenticated middleware
     
+    //console.log(req.file)  //product image details
     const {productName, productDescription, productPrice, productStatus, productStockQty} = req.body
 
     if(!productName || !productDescription || !productPrice || !productStatus || !productStockQty){
