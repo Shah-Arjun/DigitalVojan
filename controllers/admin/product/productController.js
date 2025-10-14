@@ -63,3 +63,29 @@ exports.getProducts = async (req, res) => {
         })
     }
 }
+
+
+
+
+//GET PRODUCT_BY_ID API LOGIC
+exports.getProduct = async (req, res) => {
+    const {id} = req.params
+    if(!id) {
+        return res.status(400).json({
+            message: "Please provide product id",
+        })
+    }
+
+    const product = await Product.find({ _id : id })            //find() returns array of object
+    if(product.length == 0){
+        res.status(400).json({
+            message: "No product found with that id",
+            product: []           //helpful in frontend
+        })
+    } else {
+        res.status(200).json({
+            message: "Product found with that id",
+            product               //sending product to frontend in response
+        })
+    }
+}
