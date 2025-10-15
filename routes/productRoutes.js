@@ -1,4 +1,4 @@
-const { createProduct, getProducts, getProduct } = require('../controllers/admin/product/productController')
+const { createProduct, getProducts, getProduct, deleteProduct } = require('../controllers/admin/product/productController')
 const isAuthenticated = require('../middleware/isAuthenticated')
 const restrictTo = require('../middleware/restrictTo')
 const {multer, storage} = require('../middleware/multerConfig')     // multer middleware imports
@@ -14,7 +14,7 @@ router.route('/products')
     .post(isAuthenticated, restrictTo("admin"),upload.single('productImage'), catchAsync(createProduct))  //"productImage" should be same in frontend name field
     .get(catchAsync(getProducts))
 
-router.route("/products/:id").get(catchAsync(getProduct))
+router.route("/products/:id").get(catchAsync(getProduct)).delete(isAuthenticated, restrictTo, catchAsync(deleteProduct))
 
 
 module.exports = router

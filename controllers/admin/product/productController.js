@@ -45,9 +45,6 @@ exports.createProduct = async (req, res) => {
     
 
 
-
-
-
 // GET ALL PRODUCTS API LOGIC
 exports.getProducts = async (req, res) => {
     const products = await Product.find()
@@ -88,4 +85,22 @@ exports.getProduct = async (req, res) => {
             product               //sending product to frontend in response
         })
     }
+}
+
+
+
+
+//DELETE PRODUCT BY ID API
+exports.deleteProduct = async (req, res) => {
+    const {id} = req.params
+    if(!id) {
+        return estimatedDocumentCount.status(400).json({
+            message: "Please provide product id"
+        })
+    }
+
+    await Product.findByIdAndDelete(id)
+    res.status(200).json({
+        message: "Product deleted successfully"
+    })
 }
