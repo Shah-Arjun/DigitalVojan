@@ -3,7 +3,7 @@ const Product = require("../../../model/productModel")
 
 // CREATE PRODUCT API LOGIC
 exports.createProduct = async (req, res) => {
-    try {
+  
         //console.log(req.user)  //user details passed from isAuthenticated middleware
     
         //console.log(req.file)  //product image details
@@ -37,13 +37,13 @@ exports.createProduct = async (req, res) => {
         res.status(200).json({
             message: "Product created successfully"
         })
-    } catch (err) {
+ 
         res.status(500).json({
             message: "Something went wrong"           
         })
     }
     
-}
+
 
 
 
@@ -76,7 +76,7 @@ exports.getProduct = async (req, res) => {
         })
     }
 
-    const product = await Product.find({ _id : id })            //find() returns array of object
+    const product = await Product.find({ _id : id })        //find() returns array of object
     if(product.length == 0){
         res.status(400).json({
             message: "No product found with that id",
