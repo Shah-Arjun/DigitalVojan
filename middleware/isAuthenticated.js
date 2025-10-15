@@ -49,7 +49,7 @@ const isAuthenticated = async(req, res, next) => {
         next()   // after authenticaton success, it runs next parameter ie. restrictTo controller
 
     } catch (err) {
-        res.status(400).json({
+        res.status(500).json({
             message: err.message
         })
     }

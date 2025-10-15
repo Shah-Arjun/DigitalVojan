@@ -33,7 +33,7 @@ app.get("/", (req,res) => {
 
 
 
-app.use("", authRoutes)    // middleware for auth routes --->  /register, /login
+app.use("/api", authRoutes)    // middleware for auth routes --->  /register, /login
 app.use("/api", productRoutes)    // middleware for product
 
 
