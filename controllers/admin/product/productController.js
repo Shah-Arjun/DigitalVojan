@@ -1,4 +1,5 @@
 const Product = require("../../../model/productModel")
+const fs = require("fs")  //nodejs package to handle file operation
 
 
 // CREATE PRODUCT API LOGIC
@@ -8,7 +9,7 @@ exports.createProduct = async (req, res) => {
     
         //console.log(req.file)  //product image details
 
-        const file = req.file
+        const file = req.file    //frontend bata aako file , file ma rakh
         let filePath
         if(!file){        // if file is not sent from frontend, set default image
             filePath = "https://images.pexels.com/photos/3907507/pexels-photo-3907507.jpeg?cs=srgb&dl=pexels-alexazabache-3907507.jpg&fm=jpg"
@@ -16,7 +17,7 @@ exports.createProduct = async (req, res) => {
             filePath = req.file.filename
         }
         
-        const {productName, productDescription, productPrice, productStatus, productStockQty} = req.body
+        const {productName, productDescription, productPrice, productStatus, productStockQty} = req.body  //destructuring the req sent front frontend
 
         if(!productName || !productDescription || !productPrice || !productStatus || !productStockQty){
             return res.status(400).json({
@@ -31,7 +32,7 @@ exports.createProduct = async (req, res) => {
             productPrice: productPrice,
             productStatus: productStatus,
             productStockQty: productStockQty,
-            productImage: filePath,
+            productImage: process.env.BACKEND_URL + filePath,
         })
         
         res.status(200).json({
@@ -103,4 +104,63 @@ exports.deleteProduct = async (req, res) => {
     res.status(200).json({
         message: "Product deleted successfully"
     })
+}
+
+
+
+
+
+//UPDATE PRODUCT API
+exports.editProduct = async (req, res) => {
+console.log("hello edit")
+
+//     const {id} = req.params
+// console.log("hello world")
+//     const {productName, productDescription, productPrice, productStatus, productStockQty} = req.body
+//     if(!productName || !productDescription || !productPrice || !productStatus || !productStockQty || !id){
+//         return res.status(400).json({
+//             message: "Provide product name, description, price, status, StockQuantity, ProductId"
+//         })
+//     }
+
+//     const oldData = await Product.findById(id)
+//     if(!oldData) {
+//         return res.status(404).json({
+//             message: "No data found with that id"
+//         })
+//     }
+// console.log(oldData)
+// return
+//     const oldProductImage = oldData.productImage     // http://localhost:3000/1760603785025-wallpaper.png
+//     const lengthToTrim = process.env.BACKEND_URL.length
+//     const finalLengthAfterTrim = oldProductImage.slice(lengthToTrim)    // 1760603785025-wallpaper.png
+
+//     //remove old file from the uploads folder if new file is sent
+//     if (req.file && req.file.filename) {
+//       fs.unlink(finalLengthAfterTrim, (err) => {
+//         if (err) {
+//           console.log("Error deleting file", err);
+//         } else {
+//           console.log("File deleted successfully");
+//         }
+//       });
+//     }
+    
+
+//     // save the new file after removing old file
+//     const datas = await Product.findByIdAndUpdate(id, {
+//         productName: productName,
+//         productDescription: productDescription,
+//         productPrice: productPrice,
+//         productStatus: productStatus,
+//         productStockQty: productStockQty,
+//         productImage: req.file && req.file.filename ? process.env.BACKEND_URL + req.file.filename : oldProductImage
+//     },{
+//         new: true,    //return new data from db
+//         runValidators: true       //validate according to ProductModel before save to db
+//     })
+
+//     res.status(200).json({
+//         message: "Product updated successfully"
+//     })
 }
