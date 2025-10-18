@@ -112,55 +112,54 @@ exports.deleteProduct = async (req, res) => {
 
 //UPDATE PRODUCT API
 exports.editProduct = async (req, res) => {
-console.log("hello edit")
+    const {id} = req.params
+    // console.log("product --- ", req.body)
+    // return
+    const {productName, productDescription, productPrice, productStatus, productStockQty} = req.body
+    if(!productName || !productDescription || !productPrice || !productStatus || !productStockQty || !id){
+        return res.status(400).json({
+            message: "Provide product name, description, price, status, StockQuantity, ProductId"
+        })
+    }
 
-//     const {id} = req.params
-// console.log("hello world")
-//     const {productName, productDescription, productPrice, productStatus, productStockQty} = req.body
-//     if(!productName || !productDescription || !productPrice || !productStatus || !productStockQty || !id){
-//         return res.status(400).json({
-//             message: "Provide product name, description, price, status, StockQuantity, ProductId"
-//         })
-//     }
+    const oldData = await Product.findById(id)
+    if(!oldData) {
+        return res.status(404).json({
+            message: "No data found with that id"
+        })
+    }
 
-//     const oldData = await Product.findById(id)
-//     if(!oldData) {
-//         return res.status(404).json({
-//             message: "No data found with that id"
-//         })
-//     }
-// console.log(oldData)
-// return
-//     const oldProductImage = oldData.productImage     // http://localhost:3000/1760603785025-wallpaper.png
-//     const lengthToTrim = process.env.BACKEND_URL.length
-//     const finalLengthAfterTrim = oldProductImage.slice(lengthToTrim)    // 1760603785025-wallpaper.png
+    const oldProductImage = oldData.productImage     // http://localhost:3000/1760603785025-wallpaper.png
+    const lengthToTrim = process.env.BACKEND_URL.length
+    const finalLengthAfterTrim = oldProductImage.slice(lengthToTrim)    // 1760603785025-wallpaper.png
 
-//     //remove old file from the uploads folder if new file is sent
-//     if (req.file && req.file.filename) {
-//       fs.unlink(finalLengthAfterTrim, (err) => {
-//         if (err) {
-//           console.log("Error deleting file", err);
-//         } else {
-//           console.log("File deleted successfully");
-//         }
-//       });
-//     }
+    //remove old file from the uploads folder if new file is sent
+    if (req.file && req.file.filename) {
+      fs.unlink("./uploads/" + finalLengthAfterTrim, (err) => {
+        if (err) {
+          console.log("Error deleting file", err);
+        } else {
+          console.log("File deleted successfully");
+        }
+      });
+    }
     
 
-//     // save the new file after removing old file
-//     const datas = await Product.findByIdAndUpdate(id, {
-//         productName: productName,
-//         productDescription: productDescription,
-//         productPrice: productPrice,
-//         productStatus: productStatus,
-//         productStockQty: productStockQty,
-//         productImage: req.file && req.file.filename ? process.env.BACKEND_URL + req.file.filename : oldProductImage
-//     },{
-//         new: true,    //return new data from db
-//         runValidators: true       //validate according to ProductModel before save to db
-//     })
+    // save the new file after removing old file
+    const datas = await Product.findByIdAndUpdate(id, {
+        productName: productName,
+        productDescription: productDescription,
+        productPrice: productPrice,
+        productStatus: productStatus,
+        productStockQty: productStockQty,
+        productImage: req.file && req.file.filename ? process.env.BACKEND_URL + req.file.filename : oldProductImage
+    },{
+        new: true,    //return new data from db
+        runValidators: true       //validate according to ProductModel before save to db
+    })
 
-//     res.status(200).json({
-//         message: "Product updated successfully"
-//     })
+    res.status(200).json({
+        message: "Product updated successfully",
+        datas
+    })
 }

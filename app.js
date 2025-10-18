@@ -8,7 +8,7 @@ const app = express()
 
 
 // middleware
-app.use(express.json())         //helps express to understand/parde JSON
+app.use(express.json())         //helps express to understand/parse JSON
 app.use(express.urlencoded({extended: true}))     //handles data from from but doesnot handle file, we need multer for file
 
 
