@@ -100,6 +100,26 @@ exports.deleteProduct = async (req, res) => {
         })
     }
 
+    const oldData = await Product.findById(id)
+    if(!oldData) {
+        return res.status(404).json({
+            message: "No data found with that id"
+        })
+    }
+
+    const oldProductImage = oldData.productImage     // http://localhost:3000/1760603785025-wallpaper.png
+    const lengthToTrim = process.env.BACKEND_URL.length
+    const finalLengthAfterTrim = oldProductImage.slice(lengthToTrim)    // 1760603785025-wallpaper.png
+
+    //remove old file from the uploads folder if new file is sent
+      fs.unlink("./uploads/" + finalLengthAfterTrim, (err) => {
+        if (err) {
+          console.log("Error deleting file", err);
+        } else {
+          console.log("File/image deleted successfully");
+        }
+      });
+
     await Product.findByIdAndDelete(id)
     res.status(200).json({
         message: "Product deleted successfully"
@@ -139,7 +159,7 @@ exports.editProduct = async (req, res) => {
         if (err) {
           console.log("Error deleting file", err);
         } else {
-          console.log("File deleted successfully");
+          console.log("File/image deleted successfully");
         }
       });
     }
