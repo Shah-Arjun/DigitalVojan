@@ -11,6 +11,7 @@ const userSchema =  new Schema({
     userPassword: {                    //pw column
         type: String,
         required: [true, "Password must be provided"],
+        select: false
     },
     userName: {
         type: String,
