@@ -1,7 +1,11 @@
-//function to access user by admin
+//function to access users by admin
 
-onst router = require('express').Router()
+const { getUsers } = require('../controllers/admin/user/userController')
+const isAuthenticated = require('../middleware/isAuthenticated')
+const restrictTo = require('../middleware/restrictTo')
 
-router.route('/')
+const router = require('express').Router()
+
+router.route('/users').get(isAuthenticated, restrictTo('admin'), getUsers)
 
 module.exports = router

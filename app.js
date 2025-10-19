@@ -2,6 +2,7 @@ const express = require('express')
 const connectMongoDB = require('./database/database')
 const authRoutes = require("./routes/authRoutes")
 const productRoutes = require("./routes/productRoutes")
+const adminUsersRoutes = require('./routes/adminUsersRoutes')
 
 require('dotenv').config()
 const app = express()
@@ -35,6 +36,7 @@ app.get("/", (req,res) => {
 
 app.use("/api", authRoutes)    // middleware for auth routes --->  /register, /login
 app.use("/api", productRoutes)    // middleware for product
+app.use("/api", adminUsersRoutes)
 
 
 

@@ -10,7 +10,7 @@ const userSchema =  new Schema({
     },
     userPassword: {                    //pw column
         type: String,
-        required: [true, "Password must be provided"]
+        required: [true, "Password must be provided"],
     },
     userName: {
         type: String,
