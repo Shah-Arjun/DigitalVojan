@@ -4,6 +4,10 @@ const Schema = mongoose.Schema
 
 //user table
 const userSchema =  new Schema({
+    userName: {
+        type: String,
+        required: [true, "Username must be provided"],
+    },
     userEmail: {                       //email column
         type: String,   
         required: [true, "Email must be provided"]
@@ -11,27 +15,28 @@ const userSchema =  new Schema({
     userPassword: {                    //pw column
         type: String,
         required: [true, "Password must be provided"],
+        minlength: 8,
         select: false
-    },
-    userName: {
-        type: String,
-        required: [true, "Username must be provided"]
     },
     phoneNumber: {
         type: Number,
-        required: [true, "Phone number must be provided"]
+        required: [true, "Phone number must be provided"],
+        select: false
     },
     role: {
         type: String,
         enum: ["customer", "admin"],
-        default: "customer"
+        default: "customer",
+        // select: false
     },
     otp: {
-        type: Number
+        type: Number,
+        select: false
     },
     isOtpVerified: {
         type: Boolean,
-        default: false
+        default: false,
+        select: false
     }
 }, {
     timestamps: true
