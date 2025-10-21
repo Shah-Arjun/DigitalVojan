@@ -54,7 +54,7 @@ exports.getProductReview = async (req, res) => {
         })
     }
 
-    const reviews = await Review.find({productId : productId}).select(["-__v"])
+    const reviews = await Review.find({productId : productId}).select(["-__v"]).populate("userId")
 
     res.status(200).json({
         message: "Reviews fetched successfylly",
