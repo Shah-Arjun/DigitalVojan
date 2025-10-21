@@ -61,3 +61,23 @@ exports.getProductReview = async (req, res) => {
         data: reviews
     })
 }
+
+
+
+
+
+
+// DELETE REVIEW api logic
+exports.deleteProductReview = async (req, res) => {
+    const reviewId = req.params.id
+    if(!reviewId){
+        return res.status(400).json({
+            message: "Please provide reviewId"
+        })
+    }
+    // find the review by id in db and delete
+    await Review.findByIdAndDelete(reviewId)
+    res.status(200).json({
+        message: "Review deleted successfully"
+    })
+}
