@@ -2,7 +2,7 @@ const Review = require("../../model/reviewModel")
 const Product = require("../../model/productModel")
 
 //REVIEW product api logic
-exports.createReview = async (req, res) => {
+exports.createProductReview = async (req, res) => {
     const userId = req.user.id
     const {rating, message} = req.body
     const productId = req.params.id
@@ -36,3 +36,28 @@ exports.createReview = async (req, res) => {
 
 
 
+
+// GET PRODUCT REVIEW api logic
+exports.getProductReview = async (req, res) => {
+    const productId = req.params.id
+    
+    if(!productId){
+        return res.status(400).json({
+            message: "Please provide product id"
+        })
+    }
+
+    const productExist = await Product.findById(productId)
+    if(!productExist){
+        return res.status(404).json({
+            message: "Product with that id doesnot exist"
+        })
+    }
+
+    const reviews = await Review.find({productId : productId}).select(["-__v"])
+
+    res.status(200).json({
+        message: "Reviews fetched successfylly",
+        data: reviews
+    })
+}
