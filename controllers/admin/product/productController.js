@@ -48,7 +48,13 @@ exports.createProduct = async (req, res) => {
 
 // GET ALL PRODUCTS API LOGIC
 exports.getProducts = async (req, res) => {
-    const products = await Product.find()
+    const products = await Product.find().populate({    //product model ko reviews vitra ko userId lai populate gar
+        path: "reviews",
+        populate: {
+            path: "userId",
+            select: "userName userEmail"  //userName, userEmail matra populate gar userId ma
+        }
+    })
     if(!products){
         res.status(400).json({
             message: "No products found",
