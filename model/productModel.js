@@ -1,4 +1,5 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
+const { reviewSchema } = require('./nextReviewModel');
 const Schema = mongoose.Schema
 
 
@@ -24,6 +25,7 @@ const productSchema = new Schema({
         required: [true, "productStockQty must be provided"]
     },
     productImage: String,
+    reviews: [reviewSchema]
 }, {
     timestamps: true
 });

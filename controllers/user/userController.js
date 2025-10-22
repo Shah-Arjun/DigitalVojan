@@ -81,3 +81,25 @@ exports.deleteProductReview = async (req, res) => {
         message: "Review deleted successfully"
     })
 }
+
+
+
+
+
+// add review---for concept of relationship in mongodb
+exports.addProductReview = async (req, res) => {
+    const productId = req.params.id
+    const {rating, message} = req.body
+    const userId = req.user.id
+    const review = {
+        userId,
+        rating,
+        message
+    }
+    const product = await Product.findById(productId)
+    product.reviews.push(review)   // product model ko reviews field ma review hal
+    await product.save()   // save to db
+    res.json({
+        message: "Review done"
+    })
+}
