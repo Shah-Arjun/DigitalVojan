@@ -55,6 +55,10 @@ exports.getProducts = async (req, res) => {
             select: "userName userEmail"  //userName, userEmail matra populate gar userId ma
         }
     })
+
+       // or
+    // const products = await Product.find().populate("userId").populate("productId")
+
     if(!products){
         res.status(400).json({
             message: "No products found",
