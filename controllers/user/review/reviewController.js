@@ -1,5 +1,5 @@
-const Review = require("../../model/reviewModel")
-const Product = require("../../model/productModel")
+const Review = require("../../../model/reviewModel")
+const Product = require("../../../model/productModel")
 
 //REVIEW product api logic
 exports.createProductReview = async (req, res) => {

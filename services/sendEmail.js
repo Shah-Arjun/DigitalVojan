@@ -1,5 +1,5 @@
 const nodemailer = require('nodemailer');
-const { options } = require('../routes/authRoutes');
+const { options } = require('../routes/auth/authRoutes');
 const { text } = require('express');
 
 

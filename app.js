@@ -5,6 +5,7 @@ const authRoutes = require("./routes/auth/authRoutes")
 const productRoutes = require("./routes/admin/productRoutes")
 const adminUsersRoutes = require('./routes/admin/adminUsersRoutes')
 const userReviewRoute = require('./routes/user/userReviewRoute')
+const profileRoutes = require('./routes/user/profileRoute')
 
 require('dotenv').config()
 const app = express()
@@ -36,10 +37,11 @@ app.get("/", (req,res) => {
 
 
 
-app.use("/api", authRoutes)    // middleware for auth routes --->  /register, /login
-app.use("/api", productRoutes)    // middleware for product
-app.use("/api", adminUsersRoutes)
-app.use("/api", userReviewRoute)
+app.use("/api/auth", authRoutes)    // middleware for auth routes --->  /register, /login
+app.use("/api/products", productRoutes)    // middleware for product
+app.use("/api/admin", adminUsersRoutes)
+app.use("/api/reviews", userReviewRoute)
+app.use("/api/profile", profileRoutes)
 
 
 

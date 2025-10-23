@@ -1,7 +1,7 @@
 // all logic related to user profile goes here
 
 const User = require('../../../model/userModel')
-const bcrypt = require('bcryptjs')
+const bcrypt = require('bcrypt')
 
 
 
@@ -33,6 +33,7 @@ exports.updateMyProfile = async (req, res) => {
         userEmail,
         phoneNumber: userPhoneNumber
     }, {
+        new: true ,                // returns new updated data
         runValidators: true      //validate the frontend data according to User model/schema
     })
     res.status(200).json({
