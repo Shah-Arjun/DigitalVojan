@@ -37,30 +37,30 @@ exports.createProductReview = async (req, res) => {
 
 
 
-// GET PRODUCT REVIEW api logic
-exports.getProductReview = async (req, res) => {
-    const productId = req.params.id
+// GET PRODUCT REVIEW api logic---------------product ma hunchha 
+// exports.getProductReview = async (req, res) => {
+//     const productId = req.params.id
     
-    if(!productId){
-        return res.status(400).json({
-            message: "Please provide product id"
-        })
-    }
+//     if(!productId){
+//         return res.status(400).json({
+//             message: "Please provide product id"
+//         })
+//     }
 
-    const productExist = await Product.findById(productId)
-    if(!productExist){
-        return res.status(404).json({
-            message: "Product with that id doesnot exist"
-        })
-    }
+//     const productExist = await Product.findById(productId)
+//     if(!productExist){
+//         return res.status(404).json({
+//             message: "Product with that id doesnot exist"
+//         })
+//     }
 
-    const reviews = await Review.find({productId : productId}).select(["-__v"]).populate("userId")
+//     const reviews = await Review.find({productId : productId}).select(["-__v"]).populate("userId")
 
-    res.status(200).json({
-        message: "Reviews fetched successfylly",
-        data: reviews
-    })
-}
+//     res.status(200).json({
+//         message: "Reviews fetched successfylly",
+//         data: reviews
+//     })
+// }
 
 
 
