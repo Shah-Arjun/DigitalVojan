@@ -42,15 +42,18 @@ exports.getProduct = async (req, res) => {
     }
 
     const product = await Product.find({ _id : id })        //find() returns array of object
+    const productReviews = await Review.find({productId : id}).populate("userId")
     if(product.length == 0){
         res.status(400).json({
             message: "No product found with that id",
-            product: []           //helpful in frontend
+            product: [],         //helpful in frontend
+            productReviews: []
         })
     } else {
         res.status(200).json({
             message: "Product found with that id",
-            product               //sending product to frontend in response
+            product,              //sending product to frontend in response
+            productReviews
         })
     }
 }
