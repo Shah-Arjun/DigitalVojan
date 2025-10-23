@@ -46,58 +46,10 @@ exports.createProduct = async (req, res) => {
     
 
 
-// GET ALL PRODUCTS API LOGIC
-exports.getProducts = async (req, res) => {
-    const products = await Product.find().populate({    //product model ko reviews vitra ko userId lai populate gar
-        path: "reviews",
-        populate: {
-            path: "userId",
-            select: "userName userEmail"  //userName, userEmail matra populate gar userId ma
-        }
-    })
-
-       // or
-    // const products = await Product.find().populate("userId").populate("productId")
-
-    if(!products){
-        res.status(400).json({
-            message: "No products found",
-            products: []         //helpful in frontend
-        })
-    } else {
-        res.status(200).json({
-            message: "Product found",
-            products                 //sending products to frontend in response
-        })
-    }
-}
+// GET Products api logic ==> global
 
 
-
-
-//GET PRODUCT_BY_ID API LOGIC
-exports.getProduct = async (req, res) => {
-    const {id} = req.params
-    if(!id) {
-        return res.status(400).json({
-            message: "Please provide product id",
-        })
-    }
-
-    const product = await Product.find({ _id : id })        //find() returns array of object
-    if(product.length == 0){
-        res.status(400).json({
-            message: "No product found with that id",
-            product: []           //helpful in frontend
-        })
-    } else {
-        res.status(200).json({
-            message: "Product found with that id",
-            product               //sending product to frontend in response
-        })
-    }
-}
-
+// GET Product api logic ==> global
 
 
 

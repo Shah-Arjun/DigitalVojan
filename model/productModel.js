@@ -25,7 +25,7 @@ const productSchema = new Schema({
         required: [true, "productStockQty must be provided"]
     },
     productImage: String,
-    reviews: [reviewSchema]
+    //reviews: [reviewSchema]
 }, {
     timestamps: true
 });
