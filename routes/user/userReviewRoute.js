@@ -1,4 +1,4 @@
-const { getMyReviews, createProductReview, deleteProductReview } = require('../../controllers/review/reviewController')
+const { getMyReviews, createProductReview, deleteProductReview } = require('../../controllers/user/review/reviewController')
 const isAuthenticated = require('../../middleware/isAuthenticated')
 const restrictTo = require('../../middleware/restrictTo')
 const catchAsync = require('../../services/catchAsync')
