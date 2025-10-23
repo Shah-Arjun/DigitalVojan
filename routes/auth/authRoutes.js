@@ -1,5 +1,5 @@
-const { registerUser, loginUser, forgetPassword, verifyOtp, resetPassword } = require('../controllers/auth/authController')
-const catchAsync = require('../services/catchAsync')
+const { registerUser, loginUser, forgetPassword, verifyOtp, resetPassword } = require('../../controllers/auth/authController')
+const catchAsync = require('../../services/catchAsync')
 
 
 //advance wy of maintaining routes

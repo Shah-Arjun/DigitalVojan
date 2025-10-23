@@ -1,9 +1,10 @@
 const express = require('express')
 const connectMongoDB = require('./database/database')
-const authRoutes = require("./routes/authRoutes")
-const productRoutes = require("./routes/productRoutes")
-const adminUsersRoutes = require('./routes/adminUsersRoutes')
-const userReviewRoute = require('./routes/userReviewRoute')
+//routes import
+const authRoutes = require("./routes/auth/authRoutes")
+const productRoutes = require("./routes/admin/productRoutes")
+const adminUsersRoutes = require('./routes/admin/adminUsersRoutes')
+const userReviewRoute = require('./routes/user/userReviewRoute')
 
 require('dotenv').config()
 const app = express()

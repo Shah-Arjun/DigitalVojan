@@ -1,9 +1,9 @@
-const { createProduct, deleteProduct, editProduct } = require('../controllers/admin/product/productController')
-const isAuthenticated = require('../middleware/isAuthenticated')
-const restrictTo = require('../middleware/restrictTo')
-const {multer, storage} = require('../middleware/multerConfig')     // multer middleware imports
-const catchAsync = require('../services/catchAsync')
-const { getProducts, getProduct } = require('../controllers/global/globalController')
+const { createProduct, deleteProduct, editProduct } = require('../../controllers/admin/product/productController')
+const isAuthenticated = require('../../middleware/isAuthenticated')
+const restrictTo = require('../../middleware/restrictTo')
+const {multer, storage} = require('../../middleware/multerConfig')     // multer middleware imports
+const catchAsync = require('../../services/catchAsync')
+const { getProducts, getProduct } = require('../../controllers/global/globalController')
 
 
 const router = require('express').Router()

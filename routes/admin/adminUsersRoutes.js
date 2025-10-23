@@ -1,9 +1,9 @@
 //route to access, delete users by admin
 
-const { getUsers, deleteUser } = require('../controllers/admin/user/userController')
-const isAuthenticated = require('../middleware/isAuthenticated')
-const restrictTo = require('../middleware/restrictTo')
-const catchAsync = require('../services/catchAsync')
+const { getUsers, deleteUser } = require('../../controllers/admin/user/userController')
+const isAuthenticated = require('../../middleware/isAuthenticated')
+const restrictTo = require('../../middleware/restrictTo')
+const catchAsync = require('../../services/catchAsync')
 
 const router = require('express').Router()
 
