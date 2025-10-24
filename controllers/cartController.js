@@ -19,7 +19,7 @@ exports.addToCart = async (req, res) => {
     }
     const user = await User.findById(userId)
     user.cart.push(productId)   //push the id of that product to cart column
-    user.save()
+    await user.save()
     res.status(200).json({
         message: "Product added to cart"
     })
@@ -44,5 +44,30 @@ exports.getMyCartItems = async(req, res) => {
     res.status(200).json({
         message: "Cart data fetched successfully",
         data: userData.cart
+    })
+}
+
+
+
+
+
+
+// DELETE items from cart
+exports.deleteItemsFromCart = async(req,res) => {
+    const {productId} = req.params
+    const userId = req.user.id
+    //check if that project exist or not
+    const product = await Product.findById(productId)
+    if(!product){
+        return res.status(200).json({
+            message: "No product with that productId"
+        })
+    }
+    // get user cart
+    const user = await User.findById(userId)
+    user.cart = user.cart.filter(pId => pId != productId)
+    await user.save()
+    res.status(200).json({
+        message: "Item removed from cart",
     })
 }
