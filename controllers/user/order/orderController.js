@@ -33,6 +33,11 @@ exports.getMyOrders = async (req, res) => {
         path: 'items.product',
         model: 'Product'
     })
+    if(orders.length == 0){
+        return res.status(404).json({
+            message: "No order found"
+        })
+    }
     res.status(200).json({
         message: "Product fetchend successfully",
         data: orders
