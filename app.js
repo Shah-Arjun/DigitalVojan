@@ -7,6 +7,7 @@ const adminUsersRoutes = require('./routes/admin/adminUsersRoutes')
 const userReviewRoute = require('./routes/user/userReviewRoute')
 const profileRoutes = require('./routes/user/profileRoute')
 const cartRoutes = require('./routes/user/cartRoutes')
+const orderRoute = require('./routes/user/orderRoute')
 
 require('dotenv').config()
 const app = express()
@@ -44,6 +45,7 @@ app.use("/api/admin", adminUsersRoutes)
 app.use("/api/reviews", userReviewRoute)
 app.use("/api/profile", profileRoutes)
 app.use("/api/cart", cartRoutes)
+app.use("/api/orders", orderRoute)
 
 
 

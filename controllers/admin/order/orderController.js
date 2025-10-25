@@ -8,7 +8,8 @@ exports.getAllOrders = async (req, res) => {
     })
     if(orders.length == 0){
         return res.status(404).json({
-            message: "No order found"
+            message: "No order found",
+            data : []
         })
     }
     res.status(200).json({
