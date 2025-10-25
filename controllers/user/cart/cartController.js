@@ -1,5 +1,5 @@
-const User = require('../model/userModel')
-const Product = require('../model/productModel')
+const User = require('../../../model/userModel')
+const Product = require('../../../model/productModel')
 
 
 // ADD product to cart controller

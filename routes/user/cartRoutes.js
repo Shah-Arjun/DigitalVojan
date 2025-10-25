@@ -1,4 +1,4 @@
-const { addToCart, getMyCartItems, deleteItemsFromCart } = require('../../controllers/cartController')
+const { addToCart, getMyCartItems, deleteItemsFromCart } = require('../../controllers/user/cart/cartController')
 const isAuthenticated = require('../../middleware/isAuthenticated')
 const catchAsync = require('../../services/catchAsync')
 

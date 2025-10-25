@@ -1,0 +1,28 @@
+const Order = require('../../../model/orderModel')
+const Product = require('../../../model/productModel')
+
+// CREATE ORDER/CHECKOUT controller
+exports.createOrder = async (req, res) => {
+    const userId = req.user.id
+    const {shippingAddress, items, totalAmount, paymentDetails} = req.body
+    if(!shippingAddress || !items.length > 0 || !totalAmount || !paymentDetails){
+        return res.status(400).json({
+            message: "Please provide shippingAddress, items, totalAmount, paymentDetails"
+        })
+    }
+
+    //insert into order db table
+    await Order.create({
+        user: userId,
+        shippingAddress,
+        items,
+        totalAmount,
+        paymentDetails
+    })
+    res.status(200).json({
+        message: "Order created successfully"
+    })
+}
+
+
+
