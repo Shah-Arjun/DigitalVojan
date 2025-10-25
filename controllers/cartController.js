@@ -52,9 +52,10 @@ exports.getMyCartItems = async(req, res) => {
 
 
 
-// DELETE items from cart
+// REMOVE items from cart
 exports.deleteItemsFromCart = async(req,res) => {
     const {productId} = req.params
+    const {productIds} = req.body
     const userId = req.user.id
     //check if that project exist or not
     const product = await Product.findById(productId)
@@ -65,7 +66,10 @@ exports.deleteItemsFromCart = async(req,res) => {
     }
     // get user cart
     const user = await User.findById(userId)
-    user.cart = user.cart.filter(pId => pId != productId)
+    // user.cart = user.cart.filter(pId => pId != productId)
+    productIds.forEach(productIdd => {                                   //to remove multiple product at a time
+        user.cart = user.cart.filter(pId => pId != productIdd)
+    });
     await user.save()
     res.status(200).json({
         message: "Item removed from cart",
