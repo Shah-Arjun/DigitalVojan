@@ -90,3 +90,33 @@ exports.updateMyOrder = async (req, res) => {
         data: updatedOrder
     })
 }
+
+
+
+
+
+//DELETE MY ORDER controller
+exports.deleteMyOrder = async (req, res) => {
+    const {id} = req.params.id
+    const userId = req.user.id
+    //check if the order exist
+    const existingOrder = await Order.findById(id)
+    if(!existingOrder){
+        return res.status(404).json({
+            message: "Order doesnot exist with that order id"
+        })
+    } 
+    // check if the user trying to delete order is true ordered user
+    if(existingOrder.user !== userId){
+        return res.status(403).json({
+            message: "You don't have permission to delete this order"
+        })
+    }
+
+    // delete the order
+    await Order.findByIdAndDelete(id)
+    res.status(200).json({
+        message: "Order deleted successfully",
+        data: null
+    })
+}
