@@ -1,5 +1,6 @@
 const Order = require('../../../model/orderModel')
 const Product = require('../../../model/productModel')
+const User = require('../../../model/userModel')
 
 // CREATE ORDER/CHECKOUT controller
 exports.createOrder = async (req, res) => {
@@ -45,3 +46,47 @@ exports.getMyOrders = async (req, res) => {
         data: orders
     })
 } 
+
+
+
+
+// UPDATE MY ORDER controller ---> user can update only if the porductStatus is 'pending'
+exports.updateMyOrder = async (req, res) => {
+    const userId = req.user.id
+    const {id} = req.params.id
+    const {shippingAddress, items} =req.body
+    if(!shippingAddress || items.length == 0){
+        return res.status(400).json({
+            message: "Please provide shippingAddress, items"
+        })
+    }
+    // get the order of above id from db
+    const existingOrder = await Order.findById(id)
+    if(!existingOrder){
+        return res.status(404).json({
+            message: "No order found with that id"
+        })
+    }
+    // check if the user trying to update order is true ordered user
+    if(existingOrder.user !== userId){
+        return res.status(403).json({
+            message: "You don't have permission to update this order"
+        })
+    }
+    //check the orderStatus
+    if(existingOrder.orderStatus == "preparation" && existingOrder.orderStatus == "ontheway"){
+        return res.status(400).json({
+            message: "You cannot update order when it is on the way"
+        })
+    }
+
+    //update the order
+    const updatedOrder = await Order.findByIdAndUpdate(id, {shippingAddress,items},{
+        runValidators: true,
+        new: true
+    })
+    res.status(200).json({
+        message: "Order updated successfully",
+        data: updatedOrder
+    })
+}
