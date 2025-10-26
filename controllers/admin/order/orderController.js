@@ -41,7 +41,7 @@ exports.getSingleOrder = async (req, res) => {
 
 
 // CHANGE ORDER STATUS by admin controller
-exports.changeOrderStatus = async (req, res) => {
+exports.updateOrderStatus = async (req, res) => {
     const {id} = req.params
     const {orderStatus} = req.body
     if(!orderStatus || !['pending', 'delivered', 'cancelled', 'ontheway', 'preparation'].includes(orderStatus.toLowerCase()) ){
