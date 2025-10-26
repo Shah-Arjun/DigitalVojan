@@ -60,7 +60,29 @@ exports.changeOrderStatus = async (req, res) => {
         new: true
     })
     res.status(200).json({
-        message: "Order fetched successfully",
+        message: "Order status updated successfully",
         data: updatedOrder
+    })
+}
+
+
+
+
+// DELETE ORDER by admin controller
+exports.deleteOrder = async (req, res) => {
+    const {id} = req.params
+    const userId = req.user.id
+    //check if order exist or not
+    const order = await Order.findById(id)
+    if(!order){
+        return res.status(404).json({
+            message: "No order found with that order id"
+        })
+    }
+    //delete the order
+    await Order.findByIdAndDelete(id)
+    res.status(200).json({
+        message: "Order deleted successfully",
+        data: null
     })
 }
