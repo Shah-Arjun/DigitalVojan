@@ -40,3 +40,27 @@ exports.getSingleOrder = async (req, res) => {
 
 
 
+// CHANGE ORDER STATUS by admin controller
+exports.changeOrderStatus = async (req, res) => {
+    const {id} = req.params
+    const {orderStatus} = req.body
+    if(!orderStatus || !['pending', 'delivered', 'cancelled', 'ontheway', 'preparation'].includes(orderStatus.toLowerCase()) ){
+       return res.status(400).json({
+            message: "orderStatus is invalis or should be provided"
+       }) 
+    }
+    //check if order exist or not
+    const order = await Order.findById(id)
+    if(!order){
+        return res.status(404).json({
+            message: "No order found with that order id"
+        })
+    }
+    const updatedOrder = await Order.findByIdAndUpdate(id, {orderStatus},{
+        new: true
+    })
+    res.status(200).json({
+        message: "Order fetched successfully",
+        data: updatedOrder
+    })
+}
