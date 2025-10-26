@@ -5,11 +5,11 @@ const Schema = mongoose.Schema
 const orderSchema = new Schema({
     user: {type: mongoose.Schema.Types.ObjectId, ref: "User"},
     items: [{
+        quantity: {type: Number, required: true},
         product: {type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true},
-        quantity: {type: Number, required: true}
     }],
     totalAmount: {type: Number, required: true},
-    shippingAddress: {type: Number, required: true},
+    shippingAddress: {type: String, required: true},
     orderStatus: {
         type: String,
         enum: ['pending', 'delivered', 'cancelled', 'ontheway', 'preparation'],
@@ -17,7 +17,7 @@ const orderSchema = new Schema({
     },
     paymentDetails: {
         method: {type: String, enum: ['COD', 'khalti']},
-        status: {type: String, enum: ['paid', 'failed', 'unpaid']}
+        status: {type: String, enum: ['paid', 'failed', 'unpaid'], default: 'unpaid'}
     }
 },{
     timestamps: true

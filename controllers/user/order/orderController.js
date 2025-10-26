@@ -29,10 +29,11 @@ exports.createOrder = async (req, res) => {
 // GET MY ORDERS controller
 exports.getMyOrders = async (req, res) => {
     const userId = req.user.id
-    const orders = await Order.find({user : userId}).populate({
+    const orders = await Order.find({user : userId}).populate({           // returns array of objects
         path: 'items.product',
-        model: 'Product'
-    })
+        model: 'Product',
+        select: "-productStockQty -createdAt -updatedAt -reviews -__v"   //don't fetch these fields of porduct
+    }).select('-__v')    //don't fetch __v form order field
     if(orders.length == 0){
         return res.status(404).json({
             message: "No order found",
@@ -40,7 +41,7 @@ exports.getMyOrders = async (req, res) => {
         })
     }
     res.status(200).json({
-        message: "Product fetchend successfully",
+        message: "Orders fetched successfully",
         data: orders
     })
 } 
