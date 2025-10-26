@@ -120,3 +120,43 @@ exports.deleteMyOrder = async (req, res) => {
         data: null
     })
 }
+
+
+
+
+
+//CHANGE MY ORDER STATUS - cancel order controller
+exports.cancelOrder = async (req, res) => {
+    const {id} = req.params.id
+    const userId = req.user.id
+
+    //check if the order exist
+    const existingOrder = await Order.findById(id)
+    if(!existingOrder){
+        return res.status(404).json({
+            message: "Order doesnot exist with that order id"
+        })
+    } 
+    // check if the user trying to cancel order is true ordered user
+    if(existingOrder.user !== userId){
+        return res.status(403).json({
+            message: "You don't have permission to cancel of this order"
+        })
+    }
+
+    //check orderStatus
+    if(existingOrder.orderStatus !== "pending"){
+        return res.status(400).json({
+            message: "You cannot cancelled the order as it is not pending"
+        })
+    }
+
+    // change the status
+    const updatedOrder = await Order.findByIdAndUpdate(id, {orderStatus: "cancelled"}, {
+        new: true
+    })
+    res.status(200).json({
+        message: "Order cancelled successfully",
+        data: updatedOrder
+    })
+}
