@@ -17,3 +17,26 @@ exports.getAllOrders = async (req, res) => {
         data: orders
     })
 } 
+
+
+
+
+// GET SINGLE ORDER controller
+exports.getSingleOrder = async (req, res) => {
+    const {id} = req.params
+    //check if order exist or not
+    const order = await Order.findById(id)
+    if(!order){
+        return res.status(404).json({
+            message: "No order found with that order id"
+        })
+    }
+    res.status(200).json({
+        message: "Order fetched successfully",
+        data: order
+    })
+}
+
+
+
+
