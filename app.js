@@ -39,11 +39,10 @@ app.get("/", (req,res) => {
 
 
 
-
 app.use("/api/auth", authRoutes)    // middleware for auth routes --->  /register, /login
 app.use("/api/products", productRoutes)    // middleware for product
-app.use("/api/admin", adminUsersRoutes)
-app.use("/api/admin", adminOrdersRoutes)
+app.use("/api/admin", adminUsersRoutes)    //adminUser route
+app.use("/api/admin", adminOrdersRoutes)     // access to orders by admin
 app.use("/api/reviews", userReviewRoute)
 app.use("/api/profile", profileRoutes)
 app.use("/api/cart", cartRoutes)
