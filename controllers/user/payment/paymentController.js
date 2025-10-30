@@ -8,10 +8,11 @@ exports.initiateKhaltiPayment = async (req, res) => {
         })
     }
     const data = {
-        return_url : "http://localhost:3000",
+        return_url : "http://localhost:3000/success",
         purchase_order_id : orderId,
         amount : amount,
-        website_url : "http://localhost:3000/"
+        website_url : "http://localhost:3000/",
+        purchase_order_name : "orderName" + orderId
     }
     const response = await axios.post("https://dev.khalti.com/api/v2/epayment/initiate/", data, {
         headers : {
@@ -19,5 +20,6 @@ exports.initiateKhaltiPayment = async (req, res) => {
         }
     })
 
-    console.log(response)
+    console.log(response.data)
+    res.redirect(response.data.payment_url)
 }
