@@ -40,7 +40,7 @@ exports.verifyPidx = async (req,res) => {
     })
     if(response.data.status == 'Completed'){
         //update in database
-        let order = await Order.find({ 'paymentDetails.pidx' : pidx})
+        let order = await Order.find({ 'paymentDetails.pidx' : pidx})   //find() returns array
         console.log(order)
         order[0].paymentDetails.method = 'khalti'
         order[0].paymentDetails.status = "paid"
@@ -50,7 +50,5 @@ exports.verifyPidx = async (req,res) => {
     } else {
         // notiyf erroer to frontend
         res.redirect('https://dev.khalti.com/errorPage')
-    }
-    res.send(response.data)
-    
+    }    
 }
