@@ -11,8 +11,14 @@ const orderRoute = require('./routes/user/orderRoute')
 const adminOrdersRoutes = require('./routes/admin/adminOrderRoute')
 const paymentRoute = require('./routes/user/paymentRoute')
 
+const {Server} = require("socket.io")
+
 require('dotenv').config()
 const app = express()
+
+
+//hey server use ejs
+app.set("view engine", 'ejs')
 
 
 // middleware
@@ -27,6 +33,11 @@ app.use(express.static('./uploads'))
 //mongoDB connection function invoke
 connectMongoDB()
 
+
+// api to render home.ejs
+app.get('/home', (req, res) => {
+    res.render("home.ejs")
+})
 
 
 //test api
@@ -52,8 +63,15 @@ app.use("/api/payment", paymentRoute)
 
 
 
-//Server Listen
+//Server Listen  ---for http
 const PORT = process.env.PORT
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log("Server running at port " + PORT)
+})
+
+// making server listen for websocket too
+const io = new Server(server)   // making object 'io' of class 'Server' and passing the 'server' listen code, now it accepts websockets
+
+io.on("connection", (data) => {
+    console.log("someone send here data->", data)
 })

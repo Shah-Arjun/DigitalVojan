@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnlineVojan | Home</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #fffdf7;
+    }
+
+    header {
+      background-color: #ff7043;
+      color: white;
+      padding: 15px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 24px;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin: 0 10px;
+      font-weight: bold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: url('/images/hero-bg.jpg') center/cover no-repeat;
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      background-color: #ff7043;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .categories {
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .category-list {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .category {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 180px;
+      padding: 15px;
+      transition: 0.3s;
+    }
+
+    .category:hover {
+      transform: translateY(-5px);
+    }
+
+    .category img {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    footer {
+      text-align: center;
+      background-color: #ff7043;
+      color: white;
+      padding: 15px;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🍴 OnlineVojan</h1>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/menu">Menu</a>
+      <a href="/about">About</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Delicious Food Delivered to Your Doorstep</h2>
+    <p>Order your favorite meals online and enjoy fast, reliable delivery.</p>
+    <a href="/menu" class="btn">Order Now</a>
+  </section>
+
+  <section class="categories">
+    <h2>Popular Categories</h2>
+    <div class="category-list">
+      <div class="category">
+        <img src="/images/pizza.jpg" alt="Pizza">
+        <h3>Pizza</h3>
+      </div>
+      <div class="category">
+        <img src="/images/burger.jpg" alt="Burger">
+        <h3>Burgers</h3>
+      </div>
+      <div class="category">
+        <img src="/images/sushi.jpg" alt="Sushi">
+        <h3>Sushi</h3>
+      </div>
+      <div class="category">
+        <img src="/images/drinks.jpg" alt="Drinks">
+        <h3>Drinks</h3>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; <%= new Date().getFullYear() %> OnlineVojan. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
