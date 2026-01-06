@@ -35,7 +35,7 @@ connectMongoDB()
 
 
 // api to render home.ejs
-app.get('/home', (req, res) => {
+app.get('/chat', (req, res) => {
     res.render("home.ejs")
 })
 
