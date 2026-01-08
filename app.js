@@ -77,4 +77,14 @@ const io = new Server(server)   // making object 'io' of class 'Server' and pass
 io.on("connection", (socket) => {
     // onlineUsers.push(socket.id)
     console.log("user connected", socket)
+    
+    
+    // socket.on("arjun", (data)=> {        //on is to receive data from frontend
+    //     console.log(data)
+    // })
+
+
+    // socket.on("disconnected", ()=> {       //for dis connection
+    //     console.log("User disconnected")
+    // })
 })
