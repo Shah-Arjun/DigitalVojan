@@ -72,6 +72,9 @@ const server = app.listen(PORT, () => {
 // making server listen for websocket too
 const io = new Server(server)   // making object 'io' of class 'Server' and passing the 'server' listen code, now it accepts websockets
 
+// const onlineUsers = []  //to know the online users
+
 io.on("connection", (socket) => {
-    console.log("user connected")
+    // onlineUsers.push(socket.id)
+    console.log("user connected", socket)
 })
