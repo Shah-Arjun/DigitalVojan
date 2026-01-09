@@ -88,22 +88,30 @@ io.on("connection", (socket) => {
 
 
     //api in web socket
-    socket.on("register", async (data)=> {        //on is to receive data from frontend, "register" is event/channel through which communication happens
-        const {username, phone, email, password} = data
+   socket.on("register", async (data) => {
+    try {
+        const { userName, phoneNumber, userEmail, userPassword } = data;
+
         await User.create({
-            userName: username,
-            phoneNumber: phone,
-            userEmail: email,
-            userPassword: password
-        })
-        console.log("done")
-    })
+            userName,
+            phoneNumber,
+            userEmail,
+            userPassword
+        });
+
+        socket.emit("register-success", "Registered successfully");
+        console.log("User registered");
+
+    } catch (error) {
+        console.error(error);
+        socket.emit("register-failed", "Registration failed");
+    }
+});
+
 
 
     // socket.on("disconnect", ()=> {       //for dis connection
     //     console.log("User disconnected")
     // })
-
-
-    
+  
 })
