@@ -12,6 +12,8 @@ const adminOrdersRoutes = require('./routes/admin/adminOrderRoute')
 const paymentRoute = require('./routes/user/paymentRoute')
 
 const {Server} = require("socket.io")
+const User = require('./model/userModel')
+const { PassThrough } = require('nodemailer/lib/xoauth2')
 
 require('dotenv').config()
 const app = express()
@@ -76,15 +78,32 @@ const io = new Server(server)   // making object 'io' of class 'Server' and pass
 
 io.on("connection", (socket) => {
     // onlineUsers.push(socket.id)
-    console.log("user connected", socket)
+    //console.log("user connected", socket)
     
     
-    // socket.on("arjun", (data)=> {        //on is to receive data from frontend
+    // socket.on("arjun", (data)=> {        //on is to receive data from frontend, "arjun" is event name
     //     console.log(data)
     // })
 
 
-    // socket.on("disconnected", ()=> {       //for dis connection
+
+    //api in web socket
+    socket.on("register", async (data)=> {        //on is to receive data from frontend, "register" is event/channel through which communication happens
+        const {username, phone, email, password} = data
+        await User.create({
+            userName: username,
+            phoneNumber: phone,
+            userEmail: email,
+            userPassword: password
+        })
+        console.log("done")
+    })
+
+
+    // socket.on("disconnect", ()=> {       //for dis connection
     //     console.log("User disconnected")
     // })
+
+
+    
 })
